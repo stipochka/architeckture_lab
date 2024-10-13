@@ -1,31 +1,13 @@
 #!/bin/bash
-expectDirSize=$((1024*512))
+expectDirSize=$((1024 * 512))
 mkdir -p /home/stepa/lab_dir
-dirsize=`du -sk /home/stepa/lab_dir/ | awk '{print $1}'`
-cnt=0
-while [ $expectDirSize -ge $dirsize ]
-do
-dd if=/dev/urandom of=/home/stepa/lab_dir/file_$cnt bs=1M count=10
 dirsize=$(du -sk /home/stepa/lab_dir/ | awk '{print $1}')
-cnt=$((cnt+1))
-echo "cnt_iter=$cnt"
-done
-echo "dirsize is $dirsize"
-./laba 30
-ls -l /home/stepa/lab_dir/
-rm -r lab_dir
-
-
-mkdir -p /home/stepa/lab_dir
-expectDirSize=$((1024*512))
-dirsize=`du -sk /home/stepa/lab_dir/ | awk '{print $1}'`
 cnt=0
-while [ $expectDirSize -ge $dirsize ]
-do
-dd if=/dev/urandom of=/home/stepa/lab_dir/file_$cnt bs=10M count=7
-dirsize=$(du -sk /home/stepa/lab_dir/ | awk '{print $1}')
-cnt=$((cnt+1))
-echo "cnt_iter=$cnt"
+while [ $expectDirSize -ge $dirsize ]; do
+	dd if=/dev/urandom of=/home/stepa/lab_dir/file_$cnt bs=1M count=10
+	dirsize=$(du -sk /home/stepa/lab_dir/ | awk '{print $1}')
+	cnt=$((cnt + 1))
+	echo "cnt_iter=$cnt"
 done
 echo "dirsize is $dirsize"
 ./laba 30
@@ -33,32 +15,44 @@ ls -l /home/stepa/lab_dir/
 rm -r lab_dir
 
 mkdir -p /home/stepa/lab_dir
-expectDirSize=$((1024*512))
-dirsize=`du -sk /home/stepa/lab_dir/ | awk '{print $1}'`
-cnt=0
-while [ $expectDirSize -ge $dirsize ]
-do
-dd if=/dev/urandom of=/home/stepa/lab_dir/file_$cnt bs=100M count=5
+expectDirSize=$((1024 * 512))
 dirsize=$(du -sk /home/stepa/lab_dir/ | awk '{print $1}')
-cnt=$((cnt+1))
-echo "cnt_iter=$cnt"
+cnt=0
+while [ $expectDirSize -ge $dirsize ]; do
+	dd if=/dev/urandom of=/home/stepa/lab_dir/file_$cnt bs=10M count=7
+	dirsize=$(du -sk /home/stepa/lab_dir/ | awk '{print $1}')
+	cnt=$((cnt + 1))
+	echo "cnt_iter=$cnt"
 done
 echo "dirsize is $dirsize"
 ./laba 30
 ls -l /home/stepa/lab_dir/
 rm -r lab_dir
 
+mkdir -p /home/stepa/lab_dir
+expectDirSize=$((1024 * 512))
+dirsize=$(du -sk /home/stepa/lab_dir/ | awk '{print $1}')
+cnt=0
+while [ $expectDirSize -ge $dirsize ]; do
+	dd if=/dev/urandom of=/home/stepa/lab_dir/file_$cnt bs=100M count=5
+	dirsize=$(du -sk /home/stepa/lab_dir/ | awk '{print $1}')
+	cnt=$((cnt + 1))
+	echo "cnt_iter=$cnt"
+done
+echo "dirsize is $dirsize"
+./laba 30
+ls -l /home/stepa/lab_dir/
+rm -r lab_dir
 
 mkdir -p /home/stepa/lab_dir
-expectDirSize=$((1024*512))
-dirsize=`du -sk /home/stepa/lab_dir/ | awk '{print $1}'`
-cnt=0
-while [ $expectDirSize -ge $dirsize ]
-do
-dd if=/dev/urandom of=/home/stepa/lab_dir/file_$cnt bs=1000M count=10
+expectDirSize=$((1024 * 512))
 dirsize=$(du -sk /home/stepa/lab_dir/ | awk '{print $1}')
-cnt=$((cnt+1))
-echo "cnt_iter=$cnt"
+cnt=0
+while [ $expectDirSize -ge $dirsize ]; do
+	dd if=/dev/urandom of=/home/stepa/lab_dir/file_$cnt bs=1000M count=10
+	dirsize=$(du -sk /home/stepa/lab_dir/ | awk '{print $1}')
+	cnt=$((cnt + 1))
+	echo "cnt_iter=$cnt"
 done
 echo "dirsize is $dirsize"
 ls -l /home/stepa/lab_dir/
