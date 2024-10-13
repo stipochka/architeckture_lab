@@ -1,0 +1,28 @@
+#!/bin/bash
+n=$1
+sizeof=$(df -k ./lab_dir/ | awk 'NR==2 {print $2}')
+workingDirSize=$(du -sk /home/stepa/lab_dir/ | awk '{print $1}')
+percentage=$(echo "scale=6; $workingDirSize * 100 / $sizeof" | bc)
+mkdir -p /home/stepa/backup
+
+if (( $(echo "$percentage >= 1" | bc -l) ));
+then 
+   files=$(find /home/stepa/lab_dir -maxdepth 1 -type f -printf '%T+ %p\n' | sort | head -n $n | awk '{print $2}')
+
+   if [ -n "$files" ]; then
+      temp_files_list=$(mktemp)
+      echo "$files" > "temp_files_list"
+      tar -czf /home/stepa/backup/backup_$(date +%Y%m%d_%H%M%S).tar.gz -T "temp_files_list"
+      if [ $? -eq 0 ]; then
+      	for file in $files; do
+      	   rm $file
+	done
+      echo "$n files archived in ./backup/"
+      else
+      	echo "error while archiving files"
+      fi
+  fi
+ else 
+ echo "not enough space to archive"
+fi
+
