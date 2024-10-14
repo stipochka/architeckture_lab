@@ -10,7 +10,7 @@ mkdir -p $workingDir/backup_$files_dir
 
 if (( $(echo "$percentage >= 1" | bc -l) ));
 then 
-   files=$(find $workinDir/$files_dir -maxdepth 1 -type f -printf '%T+ %p\n' | sort | head -n $n | awk '{print $2}')
+   files=$(find $workingDir/$files_dir -maxdepth 1 -type f -printf '%T+ %p\n' | sort | head -n $n | awk '{print $2}')
 
    if [ -n "$files" ]; then
       mkdir ./temp_dir

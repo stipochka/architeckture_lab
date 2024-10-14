@@ -8,8 +8,8 @@ generate_test () {
    cnt=0
    while [ $expectDirSize -ge $dirsize ]; 
    do
-	   dd if=/dev/urandom of=$currdir/dir_name/file_$cnt bs=${block_size}M count=$count_blocks 1> /dev/null
-	   dirsize=$(du -sk $currdir/log_files | awk '{print $1}')
+	   dd if=/dev/urandom of=$currdir/$dir_name/file_$cnt bs=${block_size}M count=$count_blocks 1> /dev/null
+	   dirsize=$(du -sk $currdir/$dir_name | awk '{print $1}')
 	   cnt=$((cnt + 1))
 
    done
