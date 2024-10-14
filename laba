@@ -6,7 +6,7 @@ files_dir=$3
 sizeof=$(df -k $workingDir/$files_dir | awk 'NR==2 {print $2}')
 workingDirSize=$(du -sk $workingDir | awk '{print $1}')
 percentage=$(echo "scale=6; $workingDirSize * 100 / $sizeof" | bc)
-mkdir -p $workingDir/backup_$files_dir
+mkdir -p $workingDirSize/backup_$files_dir
 
 if (( $(echo "$percentage >= 1" | bc -l) ));
 then 
@@ -16,7 +16,7 @@ then
       mkdir ./temp_dir
       cnt=0
       for file in $files; do
-	      mv file ./temp_dir/file_$cnt
+	      mv $file ./temp_dir/file_$cnt
 	      cnt=$(( cnt + 1 ))
       done
       tar czf $workingDir/backup_${files_dir}/$(date +%Y%m%d_%H%M%S).tar.gz ./temp_dir
