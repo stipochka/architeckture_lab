@@ -1,22 +1,23 @@
-#!/bin/bash
+!/bin/bash
 generate_test () {
-   block_size=$1; count_blocks=$2; files_to_archive=$3
+   block_size=$1; count_blocks=$2; files_to_archive=$3; dir_name=$4
    expectDirSize=$((512*1024))
    currdir=$(pwd)
-   mkdir -p $currdir/log_files
-   dirsize=$(du -sk $currdir/log_files | awk '{print $1}')
+   mkdir -p $currdir/$dir_name
+   dirsize=$(du -sk $currdir/$dir_name | awk '{print $1}')
    cnt=0
    while [ $expectDirSize -ge $dirsize ]; 
    do
-	   dd if=/dev/urandom of=$currdir/log_files/file_$cnt bs=${block_size}M count=$count_blocks > /dev/null
+	   dd if=/dev/urandom of=$currdir/dir_name/file_$cnt bs=${block_size}M count=$count_blocks 1> /dev/null
 	   dirsize=$(du -sk $currdir/log_files | awk '{print $1}')
 	   cnt=$((cnt + 1))
 
    done
-   echo "log dir: `ls $currdir/log_files`"
-   ./laba $currdir $files_to_archive
-   echo "log dir after archieving files:"
-   ls $currdir/log_files
+   echo "$dir_name `ls $currdir/$dir_name`"
+   ./laba $currdir $files_to_archive $dir_name
+   echo "$dir_name after archieving files:"
+   ls $currdir/$dir_name
+   rm -r $currdir/$dir_name
 
 }
-generate_test 1 10 30
+generate_test 1 10 30 log_files

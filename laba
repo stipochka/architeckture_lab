@@ -2,25 +2,28 @@
 
 workingDir=$1
 n=$2
-
-sizeof=$(df -k $workingDir/log_files | awk 'NR==2 {print $2}')
+files_dir=$3
+sizeof=$(df -k $workingDir/$files_dir | awk 'NR==2 {print $2}')
 workingDirSize=$(du -sk $workingDir | awk '{print $1}')
 percentage=$(echo "scale=6; $workingDirSize * 100 / $sizeof" | bc)
-mkdir -p $workingDir/backup
+mkdir -p $workingDir/backup_$files_dir
 
 if (( $(echo "$percentage >= 1" | bc -l) ));
 then 
-   files=$(find $workingDir/log_files -maxdepth 1 -type f -printf '%T+ %p\n' | sort | head -n $n | awk '{print $2}')
+   files=$(find $workingDir/$files_dir -maxdepth 1 -type f -printf '%T+ %p\n' | sort | head -n $n | awk '{print $2}')
 
    if [ -n "$files" ]; then
       temp_files_list=$(mktemp)
       echo "$files" > "temp_files_list"
-      tar -czf $workingDir/backup_$(date +%Y%m%d_%H%M%S).tar.gz -T "temp_files_list"
+      cnt=0
+      tar czf $workingDir/backup_${files_dir}/$(date +%Y%m%d_%H%M%S).tar.gz "temp_files_list"
       if [ $? -eq 0 ]; then
       	for file in $files; do
       	   rm $file
+	   cnt=$(( cnt+1 ))
 	done
-      echo "$n files archived in ./backup/"
+      echo "$cnt files archived in ./backup/"
+      ls $workingDir/backup_$files_dir
       else
       	echo "error while archiving files"
       fi
