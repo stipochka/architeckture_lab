@@ -14,7 +14,7 @@ generate_test () {
 
    done
    echo "log dir: `ls $currdir/log_files`"
-   ./laba $files_to_archive
+   ./laba $currdir $files_to_archive
    echo "log dir after archieving files:"
    ls $currdir/log_files
 
