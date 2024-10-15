@@ -6,7 +6,7 @@ files_dir=$3
 sizeof=$(df -k $workingDir/$files_dir | awk 'NR==2 {print $2}')
 workingDirSize=$(du -sk $workingDir | awk '{print $1}')
 percentage=$(echo "scale=6; $workingDirSize * 100 / $sizeof" | bc)
-mkdir -p $workingDirSize/backup_$files_dir
+mkdir -p $workingDir/backup_$files_dir
 
 if (( $(echo "$percentage >= 1" | bc -l) ));
 then 
