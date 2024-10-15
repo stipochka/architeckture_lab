@@ -3,7 +3,7 @@
 workingDir=$1
 n=$2
 files_dir=$3
-sizeof=$(df -k $workingDir/$files_dir | awk 'NR==2 {print $2}')
+sizeof=$(df -k $workingDir/$files_dir | awk 'NR==2 {print $4}')
 workingDirSize=$(du -sk $workingDir | awk '{print $1}')
 percentage=$(echo "scale=6; $workingDirSize * 100 / $sizeof" | bc)
 mkdir -p $workingDir/backup_$files_dir
@@ -22,8 +22,8 @@ then
       tar czf $workingDir/backup_${files_dir}/$(date +%Y%m%d_%H%M%S).tar.gz ./temp_dir
       if [ $? -eq 0 ]; then
 	rm -r ./temp_dir
-      echo "$cnt files archived in ./backup/"
-      ls $workingDir/backup_$files_dir
+      	echo "$cnt files archived in ./backup/"
+      	ls $workingDir/backup_$files_dir
       else
       	echo "error while archiving files"
       fi
