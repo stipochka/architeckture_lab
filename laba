@@ -22,7 +22,7 @@ then
       tar czf $workingDir/backup_${files_dir}/$(date +%Y%m%d_%H%M%S).tar.gz ./temp_dir
       if [ $? -eq 0 ]; then
 	rm -r ./temp_dir
-      	echo "$cnt files archived in ./backup/"
+      	echo "$cnt files archived in ./backup_$files_dir"
       	ls $workingDir/backup_$files_dir
       else
       	echo "error while archiving files"

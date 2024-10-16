@@ -21,4 +21,4 @@ generate_test () {
 
 }
 generate_test 1 10 30 log_files
-generate_test 5 2 40 tmp_files
+generate_test 5 2 60 tmp_files
