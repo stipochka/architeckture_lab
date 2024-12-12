@@ -8,12 +8,13 @@ generate_test () {
    cnt=0
    while [ $expectDirSize -ge $dirsize ]; 
    do
-	   dd if=/dev/urandom of=$currdir/$dir_name/file_$cnt bs=${block_size}M count=$count_blocks 1> /dev/null
+	   dd if=/dev/urandom of=$currdir/$dir_name/file_$cnt bs=${block_size}M count=$count_blocks > /dev/null 2>&1
 	   dirsize=$(du -sk $currdir/$dir_name | awk '{print $1}')
 	   cnt=$((cnt + 1))
 
    done
-   echo "$dir_name `ls $currdir/$dir_name`"
+   echo "$dir_name:"
+   ls $currdir/$dir_name
    ./laba $currdir $files_to_archive $dir_name
    echo "$dir_name after archieving files:"
    ls $currdir/$dir_name
@@ -22,3 +23,4 @@ generate_test () {
 }
 generate_test 1 10 30 log_files
 generate_test 5 2 60 tmp_files
+generate_test 10 4 26 log_files
